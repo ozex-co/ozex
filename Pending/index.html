@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OZEX - شركة متخصصة في تطوير وتصميم الويب باستخدام أحدث التقنيات لضمان أداء متميز وتجربة مستخدم رائعة.">
+    <title>OZEX - قريبًا</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            AOS.init();
+            const countdown = document.getElementById("countdown");
+            const launchDate = new Date("2025-03-11T00:00:00").getTime(); // وقت الإطلاق المحدد
+            const duration = 10 * 24 * 60 * 60 * 1000; // مدة العد 10 أيام
+            const endDate = launchDate + duration; // وقت انتهاء العد بعد 10 أيام
+            
+            function updateCountdown() {
+                const currentTime = new Date().getTime();
+                const distance = endDate - currentTime;
+                if (distance > 0) {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    countdown.innerHTML = `${days} يوم : ${hours} ساعة : ${minutes} دقيقة : ${seconds} ثانية`;
+                } else {
+                    countdown.innerHTML = "🚀 تم الإطلاق!";
+                }
+            }
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        });
+    </script>
+</head>
+<body class="flex flex-col items-center justify-center h-screen bg-gray-900 text-white text-center p-5" dir="rtl">
+    <img src="logo.png" alt="OZEX Logo" class="w-40 mb-5" data-aos="fade-down">
+    <h1 class="text-4xl font-bold mb-3" data-aos="fade-up">🚀 موقعنا قادم قريبًا 🚀</h1>
+    <p class="text-lg mb-5 max-w-lg" data-aos="fade-up">في <strong>OZEX</strong>، نبني منصة متكاملة لتقديم خدمات تطوير وتصميم الويب بأحدث التقنيات لضمان تجربة مستخدم متميزة.</p>
+    <div id="countdown" class="text-3xl font-bold bg-gray-800 px-5 py-3 rounded-lg shadow-lg" data-aos="zoom-in"></div>
+    <p class="mt-5 text-sm text-gray-400">تابعونا للمزيد من التحديثات! 🚀</p>
+</body>
+</html>
