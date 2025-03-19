@@ -1,0 +1,46 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <!-- الخلفية -->
+  <rect width="300" height="300" fill=""/>
+  
+  <!-- تأثيرات رقمية على حرف O -->
+  <circle cx="90" cy="150" r="50" stroke="#00eaff" stroke-width="12" fill="none" filter="url(#glow)"/>
+  <circle cx="90" cy="150" r="40" stroke="#0074ff" stroke-width="6" fill="none" opacity="0.8"/>
+  
+  <!-- حرف X بجوار O مع تأثيرات محسنة -->
+  <path d="M160 110 L220 170 M220 110 L160 170" stroke="#ff00ff" stroke-width="12" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M165 115 L215 165 M215 115 L165 165" stroke="#a000c8" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+  
+  <!-- أشكال رقمية إضافية محسنة -->
+  <polygon points="40,120 70,90 100,120 70,150" stroke="#00eaff" stroke-width="3" fill="none" opacity="0.6"/>
+  <polygon points="200,180 230,150 260,180 230,210" stroke="#ff00ff" stroke-width="3" fill="none" opacity="0.6"/>
+  
+  <!-- خطوط تأثيرات إلكترونية محسنة -->
+  <line x1="110" y1="140" x2="140" y2="140" stroke="#00eaff" stroke-width="4"/>
+  <line x1="110" y1="160" x2="140" y2="160" stroke="#00eaff" stroke-width="4"/>
+  <line x1="180" y1="140" x2="210" y2="140" stroke="#ff00ff" stroke-width="4"/>
+  <line x1="180" y1="160" x2="210" y2="160" stroke="#ff00ff" stroke-width="4"/>
+  
+  <!-- تأثير السرعة مع تحسينات -->
+  <path d="M50 150 L90 150" stroke="#00eaff" stroke-width="4" stroke-dasharray="7,7" opacity="0.8"/>
+  <path d="M220 150 L260 150" stroke="#ff00ff" stroke-width="4" stroke-dasharray="7,7" opacity="0.8"/>
+  
+  <!-- تأثير الحركة السريعة مع تحسينات -->
+  <polygon points="75,145 90,150 75,155" fill="#00eaff" opacity="0.9"/>
+  <polygon points="225,145 240,150 225,155" fill="#ff00ff" opacity="0.9"/>
+  
+  <!-- تأثير الشبكة الرقمية الموسع -->
+  <line x1="30" y1="30" x2="80" y2="80" stroke="#00eaff" stroke-width="2" opacity="0.4"/>
+  <line x1="220" y1="220" x2="270" y2="270" stroke="#ff00ff" stroke-width="2" opacity="0.4"/>
+  
+  <!-- تأثير النيون -->
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  
+  <!-- اسم الشركة تحت اللوجو بتصميم أكثر احترافية مع تأثير نيون محسن -->
+  <text x="50%" y="275" fill="#ffffff" font-family="Orbitron, sans-serif" font-size="42" font-weight="bold" text-anchor="middle" stroke="#00eaff" stroke-width="2" filter="url(#glow)">OZEX</text>
+</svg>

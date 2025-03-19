@@ -2,43 +2,58 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/logo.webp">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="OZEX - شركة متخصصة في تطوير وتصميم الويب باستخدام أحدث التقنيات لضمان أداء متميز وتجربة مستخدم رائعة.">
-    <title>OZEX - قريبًا</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            AOS.init();
-            const countdown = document.getElementById("countdown");
-            const launchDate = new Date("2025-03-11T00:00:00").getTime(); // وقت الإطلاق المحدد
-            const duration = 10 * 24 * 60 * 60 * 1000; // مدة العد 10 أيام
-            const endDate = launchDate + duration; // وقت انتهاء العد بعد 10 أيام
-            
-            function updateCountdown() {
-                const currentTime = new Date().getTime();
-                const distance = endDate - currentTime;
-                if (distance > 0) {
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    countdown.innerHTML = `${days} يوم : ${hours} ساعة : ${minutes} دقيقة : ${seconds} ثانية`;
-                } else {
-                    countdown.innerHTML = "🚀 تم الإطلاق!";
-                }
-            }
-            setInterval(updateCountdown, 1000);
-            updateCountdown();
-        });
+    <title>OZEX - تطوير مواقع ويب احترافية</title>
+
+    <!-- وصف الصفحة (مهم لـ SEO) -->
+    <meta name="description" content="OZEX تقدم حلول برمجية مبتكرة في تطوير المواقع والمتاجر الإلكترونية. احصل على موقعك الاحترافي بأفضل التقنيات.">
+
+    <!-- الكلمات المفتاحية -->
+    <meta name="keywords" content="OZEX, تطوير مواقع, برمجة, متاجر إلكترونية, تصميم واجهات, SEO, استضافة, خدمات ويب">
+
+    <!-- تهيئة محركات البحث -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="OZEX">
+
+    <!-- تحسين السوشيال ميديا (Open Graph) -->
+    <meta property="og:title" content="OZEX - تطوير مواقع ويب احترافية">
+    <meta property="og:description" content="OZEX توفر لك أفضل خدمات تطوير المواقع والمتاجر الإلكترونية بأحدث التقنيات.">
+    <meta property="og:image" content="https://ozex.site/preveiw.png">
+    <meta property="og:url" content="https://ozex.site">
+    <meta property="og:type" content="website">
+
+    <!-- تحسين تويتر -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OZEX - تطوير مواقع ويب احترافية">
+    <meta name="twitter:description" content="OZEX توفر لك أفضل خدمات تطوير المواقع والمتاجر الإلكترونية بأحدث التقنيات.">
+    <meta name="twitter:image" content="https://ozex.site/preveiw.png">
+
+    <!-- JSON-LD لتحسين السيو -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "OZEX",
+      "url": "https://ozex.site",
+      "description": "OZEX تقدم حلول برمجية مبتكرة في تطوير المواقع والمتاجر الإلكترونية."
+    }
     </script>
+
+    <!-- تحميل الـ CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="/styles/main.css">
 </head>
-<body class="flex flex-col items-center justify-center h-screen bg-gray-900 text-white text-center p-5" dir="rtl">
-    <img src="logo.png" alt="OZEX Logo" class="w-40 mb-5" data-aos="fade-down">
-    <h1 class="text-4xl font-bold mb-3" data-aos="fade-up">🚀 موقعنا قادم قريبًا 🚀</h1>
-    <p class="text-lg mb-5 max-w-lg" data-aos="fade-up">في <strong>OZEX</strong>، نبني منصة متكاملة لتقديم خدمات تطوير وتصميم الويب بأحدث التقنيات لضمان تجربة مستخدم متميزة.</p>
-    <div id="countdown" class="text-3xl font-bold bg-gray-800 px-5 py-3 rounded-lg shadow-lg" data-aos="zoom-in"></div>
-    <p class="mt-5 text-sm text-gray-400">تابعونا للمزيد من التحديثات! 🚀</p>
+<body>
+    <div id="app"></div>
+
+    <!-- تحميل الجافاسكريبت -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+    <script src="/public/tracking.js" defer></script>
+    <script type="module" src="/src/main.js"></script>
 </body>
 </html>
