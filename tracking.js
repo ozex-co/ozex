@@ -15,7 +15,7 @@
 
   // دالة لإرسال البيانات باستخدام URL نسبي (سيقوم الـ proxy بتوجيهها للباك إند)
   function sendData(endpoint, data) {
-    if (endpoint === '/track-visit') {
+    if (endpoint === 'https://tracking.ozex.site/track-visit') {
       fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },
@@ -47,26 +47,26 @@
     if ((element.children && element.children.length > 0) || innerText.length > 50) {
       return tag;
     }
-    
+
     // إذا كان النص موجودًا وقصيرًا
     if (innerText) return innerText;
-    
+
     // في حالة عدم وجود محتوى، إرجاع اسم التاج فقط
     return tag;
   }
 
   // عند مغادرة الصفحة، إرسال مدة التواجد
   window.addEventListener('beforeunload', function() {
-    const data = { 
-      visit_id: visit_id, 
-      session_id: session_id, 
-      duration: Date.now() - startTime 
+    const data = {
+      visit_id: visit_id,
+      session_id: session_id,
+      duration: Date.now() - startTime
     };
-    navigator.sendBeacon("/track-duration", JSON.stringify(data));
+    navigator.sendBeacon("https://tracking.ozex.site/track-duration", JSON.stringify(data));
   });
 
   // إرسال بيانات الزيارة عند تحميل الصفحة
-  sendData('/track-visit', {
+  sendData('https://tracking.ozex.site/track-visit', {
     session_id: session_id,
     page: window.location.pathname,
     user_agent: navigator.userAgent,
@@ -94,6 +94,6 @@
       element_id: event.target.id || null,
       element_class: event.target.className || null
     };
-    navigator.sendBeacon("/track-action", JSON.stringify(data));
+    navigator.sendBeacon("https://tracking.ozex.site/track-action", JSON.stringify(data));
   });
 })();
