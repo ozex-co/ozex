@@ -1,0 +1,52 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="630" fill="#0A0A0A"/>
+    
+    <!-- تأثيرات نيون متوهجة -->
+    <defs>
+        <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feFlood result="flood" flood-color="#00FFFF" flood-opacity="0.8"/>
+            <feComposite in="flood" in2="SourceAlpha" operator="in"/>
+            <feGaussianBlur stdDeviation="10"/>
+            <feMerge>
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    
+    <!-- شعار OZEX -->
+    <text x="50%" y="120" font-size="80" font-weight="bold" fill="#00FFFF" text-anchor="middle" font-family="Arial" filter="url(#neonGlow)">OZEX</text>
+    <text x="50%" y="190" font-size="28" fill="#FFF" text-anchor="middle" font-family="Arial">مواقع ويب احترافية بتقنيات المستقبل</text>
+    
+    <!-- تأثيرات إضاءة نيون -->
+    <circle cx="200" cy="100" r="120" stroke="#00FFFF" stroke-width="4" opacity="0.7" filter="url(#neonGlow)"/>
+    <circle cx="1000" cy="500" r="160" stroke="#FF00FF" stroke-width="4" opacity="0.7" filter="url(#neonGlow)"/>
+    
+    <!-- خدمات OZEX -->
+    <g transform="translate(200, 250)">
+        <circle cx="50" cy="50" r="45" fill="#00FFFF" opacity="0.3" filter="url(#neonGlow)"/>
+        <text x="50" y="50" font-size="40" fill="#00FFFF" text-anchor="middle" font-family="Arial">🖥️</text>
+        <text x="50" y="110" font-size="24" fill="#FFF" text-anchor="middle" font-family="Arial">تصميم مواقع</text>
+    </g>
+    
+    <g transform="translate(500, 250)">
+        <circle cx="50" cy="50" r="45" fill="#FF00FF" opacity="0.3" filter="url(#neonGlow)"/>
+        <text x="50" y="50" font-size="40" fill="#FF00FF" text-anchor="middle" font-family="Arial">🛍️</text>
+        <text x="50" y="110" font-size="24" fill="#FFF" text-anchor="middle" font-family="Arial">متاجر إلكترونية</text>
+    </g>
+    
+    <g transform="translate(800, 250)">
+        <circle cx="50" cy="50" r="45" fill="#FFD700" opacity="0.3" filter="url(#neonGlow)"/>
+        <text x="50" y="50" font-size="40" fill="#FFD700" text-anchor="middle" font-family="Arial">🎨</text>
+        <text x="50" y="110" font-size="24" fill="#FFF" text-anchor="middle" font-family="Arial">تصميم UI/UX</text>
+    </g>
+    
+    <g transform="translate(350, 400)">
+        <circle cx="50" cy="50" r="45" fill="#FF4500" opacity="0.3" filter="url(#neonGlow)"/>
+        <text x="50" y="50" font-size="40" fill="#FF4500" text-anchor="middle" font-family="Arial">🚀</text>
+        <text x="50" y="110" font-size="24" fill="#FFF" text-anchor="middle" font-family="Arial">تحسين SEO</text>
+    </g>
+    
+    <!-- خطوط نيون متوهجة -->
+    <line x1="50" y1="600" x2="1150" y2="600" stroke="#00FFFF" stroke-width="3" opacity="0.6" filter="url(#neonGlow)"/>
+</svg>
