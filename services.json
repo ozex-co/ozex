@@ -3,21 +3,21 @@
     "id": 1,
     "name": "تطوير الويب",
     "description": "إنشاء مواقع متجاوبة وعصرية",
-    "image": "/assets/dev.png",
+    "image": "/assets/dev-d19c48e6.png",
     "alt": "تصميم موقع ويب احترافي ومتجاوب باستخدام أحدث التقنيات"
   },
   {
     "id": 2,
     "name": "متاجر إلكترونية",
     "description": "تصميم متاجر قوية للبيع أونلاين",
-    "image": "/assets/E-commerce2.png",
+    "image": "/assets\E-commerce2-61fbe98b.png",
     "alt": "تصميم متجر إلكتروني متكامل يوفر تجربة تسوق آمنة وسلسة"
   },
   {
     "id": 3,
     "name": "تصميم UX/UI",
     "description": "تجربة مستخدم رائعة مع تصميم عصري",
-    "image": "/assets/UiUx.png",
+    "image": "/assets\UiUx-e120ea48.png",
     "alt": "تصميم واجهة مستخدم وتجربة مستخدم احترافية تضمن تفاعل العملاء بكفاءة"
   }
 ]
