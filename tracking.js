@@ -76,24 +76,5 @@
   });
 
   // تتبع نقرات المستخدم
-  document.addEventListener('click', function(event) {
-    let elementContent = "";
-    // إذا كان العنصر زرًا، يتم أخذ نص الزر فقط
-    if (event.target.tagName.toLowerCase() === "button") {
-      elementContent = event.target.innerText.trim();
-    } else {
-      // خلاف ذلك يتم استخدام دالة getElementContent
-      elementContent = getElementContent(event.target);
-    }
-    // دمج اسم الصفحة مع المحتوى
-    const finalContent = window.location.pathname + ">" + elementContent;
-    const data = {
-      session_id: session_id,
-      action: 'click',
-      element: finalContent,
-      element_id: event.target.id || null,
-      element_class: event.target.className || null
-    };
-    navigator.sendBeacon("/track-action", JSON.stringify(data));
-  });
+ 
 })();
