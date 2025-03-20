@@ -13,60 +13,40 @@
   let visit_id = null;
   let pageLoadTime = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart;
 
-  // دالة لإرسال البيانات باستخدام URL نسبي (سيقوم الـ proxy بتوجيهها للباك إند)
+  // دالة لإرسال البيانات بدون انتظار استجابة (تجنب CORS)
   function sendData(endpoint, data) {
-    if (endpoint === 'https://tracking.ozex.site/track-visit') {
-      fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(respData => {
-        console.log("Visit tracked:", respData);
-        visit_id = respData.visit_id;
-      })
-      .catch(err => console.error("Error tracking visit:", err));
-    } else {
-      navigator.sendBeacon(endpoint, JSON.stringify(data));
-    }
+    fetch(endpoint, {
+      method: 'POST',
+      mode: 'no-cors', // تجاوز قيود CORS
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(err => console.error("Error sending data:", err));
   }
 
   // دالة مساعدة للحصول على المحتوى المناسب من العنصر المُضغط
   function getElementContent(element) {
     const tag = element.tagName.toLowerCase();
-
-    // لو كان العنصر صورة، إرجاع alt أو src
     if (tag === "img") {
       return element.alt ? element.alt.trim() : (element.src ? element.src : "img");
     }
-
-    // الحصول على النص الداخلي بعد قص المسافات
     const innerText = element.innerText ? element.innerText.trim() : "";
-    // إذا كان العنصر يحتوي على عناصر فرعية أو النص طويل (أكثر من 50 حرف)
     if ((element.children && element.children.length > 0) || innerText.length > 50) {
       return tag;
     }
-
-    // إذا كان النص موجودًا وقصيرًا
-    if (innerText) return innerText;
-
-    // في حالة عدم وجود محتوى، إرجاع اسم التاج فقط
-    return tag;
+    return innerText || tag;
   }
 
   // عند مغادرة الصفحة، إرسال مدة التواجد
   window.addEventListener('beforeunload', function() {
-    const data = {
+    sendData("/track-duration", {
       visit_id: visit_id,
       session_id: session_id,
       duration: Date.now() - startTime
-    };
-    navigator.sendBeacon("https://tracking.ozex.site/track-duration", JSON.stringify(data));
+    });
   });
 
   // إرسال بيانات الزيارة عند تحميل الصفحة
-  sendData('https://tracking.ozex.site/track-visit', {
+  sendData('/track-visit', {
     session_id: session_id,
     page: window.location.pathname,
     user_agent: navigator.userAgent,
@@ -76,5 +56,18 @@
   });
 
   // تتبع نقرات المستخدم
- 
+  document.addEventListener('click', function(event) {
+    let elementContent = event.target.tagName.toLowerCase() === "button"
+      ? event.target.innerText.trim()
+      : getElementContent(event.target);
+    
+    const finalContent = window.location.pathname + ">" + elementContent;
+    sendData("/track-action", {
+      session_id: session_id,
+      action: 'click',
+      element: finalContent,
+      element_id: event.target.id || null,
+      element_class: event.target.className || null
+    });
+  });
 })();
