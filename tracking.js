@@ -54,19 +54,23 @@
     if ((element.children && element.children.length > 0) || innerText.length > 50) {
       return tag;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 3d44d7c52f45a393099114226d7f731ac0a29712
     if (innerText) return innerText;
-
+    
     // في حالة عدم وجود محتوى، إرجاع اسم التاج فقط
     return tag;
   }
 
   // عند مغادرة الصفحة، إرسال مدة التواجد
   window.addEventListener('beforeunload', function() {
-    const data = {
-      visit_id: visit_id,
-      session_id: session_id,
-      duration: Date.now() - startTime
+    const data = { 
+      visit_id: visit_id, 
+      session_id: session_id, 
+      duration: Date.now() - startTime 
     };
     navigator.sendBeacon("https://tracking.ozex.site/track-duration", JSON.stringify(data));
   });
