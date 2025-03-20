@@ -38,7 +38,7 @@
 
   // عند مغادرة الصفحة، إرسال مدة التواجد
   window.addEventListener('beforeunload', function() {
-    sendData("/track-duration", {
+    sendData("https://tracking.ozex.site/track-duration", {
       visit_id: visit_id,
       session_id: session_id,
       duration: Date.now() - startTime
@@ -46,7 +46,7 @@
   });
 
   // إرسال بيانات الزيارة عند تحميل الصفحة
-  sendData('/track-visit', {
+  sendData('https://tracking.ozex.site/track-visit', {
     session_id: session_id,
     page: window.location.pathname,
     user_agent: navigator.userAgent,
@@ -62,7 +62,7 @@
       : getElementContent(event.target);
     
     const finalContent = window.location.pathname + ">" + elementContent;
-    sendData("/track-action", {
+    sendData("https://tracking.ozex.site/track-action", {
       session_id: session_id,
       action: 'click',
       element: finalContent,
