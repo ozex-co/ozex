@@ -15,7 +15,7 @@
 
   // دالة لإرسال البيانات باستخدام URL نسبي (سيقوم الـ proxy بتوجيهها للباك إند)
   function sendData(endpoint, data) {
-    if (endpoint === 'https://tracking.ozex.site/track-visit') {
+    if (endpoint === '/track-visit') {
       fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },
@@ -62,11 +62,11 @@
       session_id: session_id,
       duration: Date.now() - startTime
     };
-    navigator.sendBeacon("https://tracking.ozex.site/track-duration", JSON.stringify(data));
+    navigator.sendBeacon("/track-duration", JSON.stringify(data));
   });
 
   // إرسال بيانات الزيارة عند تحميل الصفحة
-  sendData('https://tracking.ozex.site/track-visit', {
+  sendData('/track-visit', {
     session_id: session_id,
     page: window.location.pathname,
     user_agent: navigator.userAgent,
@@ -94,6 +94,6 @@
       element_id: event.target.id || null,
       element_class: event.target.className || null
     };
-    navigator.sendBeacon("https://tracking.ozex.site/track-action", JSON.stringify(data));
+    navigator.sendBeacon("/track-action", JSON.stringify(data));
   });
 })();
