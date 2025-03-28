@@ -1,83 +1,78 @@
-(function() {
-  // شرط لاستبعاد صفحات الإدارة من التتبع
-  if (window.location.pathname.indexOf("/admin") !== -1) {
-    console.log("تم اكتشاف صفحة الإدارة؛ تم تعطيل التتبع.");
-    return; // عدم تنفيذ باقي الكود
-  }
-
-  // إنشاء session_id وتخزينه في localStorage إذا لم يكن موجودًا
-  const storedSessionId = localStorage.getItem('session_id');
-  const session_id = storedSessionId || (Date.now() + '-' + Math.random().toString(36).substr(2, 9));
-  localStorage.setItem('session_id', session_id);
-
-  const startTime = Date.now();
-  let visit_id = null;
-
-  // استخدام واجهة Navigation Timing الحديثة إن كانت متاحة
-  let pageLoadTime = 0;
-  if (performance.getEntriesByType && performance.getEntriesByType("navigation").length) {
-    pageLoadTime = performance.getEntriesByType("navigation")[0].domContentLoadedEventEnd;
-  } else if (performance.timing) {
-    pageLoadTime = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart;
-  }
-
-  // دالة لإرسال البيانات باستخدام URL نسبي (سيقوم الـ proxy بتوجيهها للباك إند)
-  function sendData(endpoint, data) {
-    if (endpoint === 'https://tracking.ozex.site/track-visit') {
-      fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(respData => {
-        console.log("تم تتبع الزيارة:", respData);
-        visit_id = respData.visit_id;
-      })
-      .catch(err => console.error("خطأ في تتبع الزيارة:", err));
-    } else {
-      navigator.sendBeacon(endpoint, JSON.stringify(data));
-    }
-  }
-
-  // دالة مساعدة للحصول على المحتوى المناسب من العنصر المُضغط
-  function getElementContent(element) {
-    const tag = element.tagName.toLowerCase();
-
-    // إذا كان العنصر صورة، إرجاع alt أو src
-    if (tag === "img") {
-      return element.alt ? element.alt.trim() : (element.src ? element.src : "img");
+(function () {
+  try {
+    // استبعاد صفحات الإدارة
+    if (window.location.pathname.includes("/admin")) {
+      console.log("تم اكتشاف صفحة الإدارة؛ تم تعطيل التتبع.");
+      return;
     }
 
-    const innerText = element.innerText ? element.innerText.trim() : "";
-    // إذا كان العنصر يحتوي على عناصر فرعية أو النص طويل (أكثر من 50 حرف)
-    if ((element.children && element.children.length > 0) || innerText.length > 50) {
-      return tag;
+    // إنشاء session_id آمن
+    let session_id;
+    try {
+      session_id = localStorage.getItem("session_id");
+      if (!session_id) {
+        session_id = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+        localStorage.setItem("session_id", session_id);
+      }
+    } catch (e) {
+      session_id = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+      console.warn("لم يتم استخدام localStorage بسبب خطأ:", e);
     }
 
-    if (innerText) return innerText;
+    const startTime = Date.now();
+    let visit_id = null;
 
-    // في حالة عدم وجود محتوى، إرجاع اسم التاج فقط
-    return tag;
+    // حساب وقت تحميل الصفحة
+    let pageLoadTime = 0;
+    const navEntry = performance.getEntriesByType?.("navigation")?.[0];
+    if (navEntry) {
+      pageLoadTime = navEntry.domContentLoadedEventEnd;
+    }
+
+    function sendData(endpoint, data) {
+      const payload = JSON.stringify(data);
+
+      if (endpoint === 'https://tracking.ozex.site/track-visit') {
+        fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: payload
+        })
+        .then(res => res.json())
+        .then(resp => {
+          console.log("تم تتبع الزيارة:", resp);
+          visit_id = resp.visit_id;
+        })
+        .catch(err => console.error("خطأ في تتبع الزيارة:", err));
+      } else {
+        try {
+          navigator.sendBeacon(endpoint, payload);
+        } catch (e) {
+          console.warn("فشل إرسال البيانات عبر Beacon:", e);
+        }
+      }
+    }
+
+    // إرسال المدة عند مغادرة الصفحة
+    window.addEventListener("beforeunload", () => {
+      sendData("https://tracking.ozex.site/track-duration", {
+        visit_id,
+        session_id,
+        duration: Date.now() - startTime
+      });
+    });
+
+    // إرسال بيانات الزيارة
+    sendData("https://tracking.ozex.site/track-visit", {
+      session_id,
+      page: window.location.pathname,
+      user_agent: navigator.userAgent,
+      referrer: document.referrer,
+      device: navigator.platform,
+      load_time: pageLoadTime
+    });
+
+  } catch (err) {
+    console.error("حدث خطأ في كود التتبع:", err);
   }
-
-  // عند مغادرة الصفحة، إرسال مدة التواجد
-  window.addEventListener('beforeunload', function() {
-    const data = {
-      visit_id: visit_id,
-      session_id: session_id,
-      duration: Date.now() - startTime
-    };
-    navigator.sendBeacon("https://tracking.ozex.site/track-duration", JSON.stringify(data));
-  });
-
-  // إرسال بيانات الزيارة عند تحميل الصفحة
-  sendData('https://tracking.ozex.site/track-visit', {
-    session_id: session_id,
-    page: window.location.pathname,
-    user_agent: navigator.userAgent,
-    referrer: document.referrer,
-    device: navigator.platform,
-    load_time: pageLoadTime
-  });
 })();
